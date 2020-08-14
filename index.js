@@ -1,7 +1,16 @@
 var express = require("express");
+var http = require("http");
 const bodyParser = require('body-parser');
 var mongoose = require("mongoose");
+var ip = require("ip");
 let stringify = require('json-stringify-safe');
+
+//building server
+var app = express();
+var server = http.createServer(app);
+const host = ip.address();
+const port = 3000;
+
 
 //model imports
 var Recipe = require("./models/recipe");
@@ -10,19 +19,16 @@ var MONGODB_URI = "mongodb+srv://root:F29vjDQtpf2QjwjA@cluster0-ei6oq.mongodb.ne
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true , useUnifiedTopology: true})
 .then(result => {
-    var server = app.listen(3000, ()=>{
-        var host = 'localhost';//server.address().address
-        var port = server.address().port
-        
-        console.log(`Example app listening at http://${host}:${port}`);
-    });
+    server.listen(port, host, ()=>{
+      console.log(`Example app listening at http://${host}:${port}`);
+    })
   })
   .catch(err => {
     console.log(err);
   });
 
 
-var app = express();
+
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 
