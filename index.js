@@ -1,7 +1,9 @@
 var express = require("express");
 const bodyParser = require('body-parser');
-var mongoose = require("mongoose");
-let stringify = require('json-stringify-safe');
+const mongoose = require('mongoose');
+const statusCode = require('./util/StatusCodes');
+
+//let stringify = require('json-stringify-safe');
 
 //model imports
 var Recipe = require("./models/recipe");
@@ -11,7 +13,7 @@ var MONGODB_URI = "mongodb+srv://root:F29vjDQtpf2QjwjA@cluster0-ei6oq.mongodb.ne
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true , useUnifiedTopology: true})
 .then(result => {
     var server = app.listen(3000, ()=>{
-        var host = 'localhost';//server.address().address
+        var host = "localhost";
         var port = server.address().port
         
         console.log(`Example app listening at http://${host}:${port}`);
@@ -30,36 +32,42 @@ app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.post("/recipes", (req,res)=>{
+app.post("/postrecipe", (req,res)=>{
 
   //console.log("req : "+stringify(req))  
 
-  const email = req.body.email;
-  const recipeName = req.body.recipeName;
-  const recipePOM = req.body.recipePOM;
-  const imageUrl = req.body.imageUrl;
+  const recipeNameValue = req.body.recipeName;
+  const descriptionValue = req.body.description;
+  const ingredientsValue = req.body.ingredients;
+  const howToMakeValue = req.body.howToMake;
+  const imageResourceValue = req.body.imageResource;
  
-  console.log(`{email : ${email}, 
-  recipeName : ${recipeName},
-  recipePOM : ${recipePOM},
-  imageUrl : ${imageUrl}}`);
+  console.log(`{recipeName : ${recipeNameValue}, 
+  description : ${descriptionValue},
+  ingredients : ${ingredientsValue},
+  howToMake : ${howToMakeValue}},
+  imageURL : ${imageResourceValue}`);
 
   const recipe = new Recipe({
-    email: email,
-    recipeName: recipeName,
-    recipePOM: recipePOM,
-    imageUrl: imageUrl
+    recipeName: recipeNameValue,
+    description: descriptionValue,
+    ingredients: ingredientsValue,
+    howToMake : howToMakeValue,
+    imageUrl: imageUrlValue
   });
-  recipe
-    .save()
-    .then(result => {
-      console.log('Created Recipe');
-      res.send("Recipe Created")
-    })
-    .catch(err => {
-      console.log(err);
-      res.send("Recipe Creation Process Failed")
-    });   
+
+  res.status(statusCode.created).send(JSON.stringify({"status" : "success"}));
+
+  // recipe
+  //   .save()
+  //   .then(result => {
+  //     console.log('Recipe Posted');
+  //     res.status(statusCode.created).send(statusCode.success);
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //     res.status().send(statusCode.BadRequest); // send("Recipe Creation Process Failed")
+  //   });   
 
 });
 

@@ -3,15 +3,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const recipeSchema = new Schema({
-  email: {
+  recipeName: {
     type: String,
     required: true
   },
-  recipeName : {
+  description : {
       type : String,
       required : true
   },
-  recipePOM : {
+  ingredients : {
+      type : String,
+      required : true
+  },
+  howToMake : {
       type : String,
       required : true
   },
