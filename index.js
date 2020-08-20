@@ -40,13 +40,13 @@ app.post("/postrecipe", (req,res)=>{
   const descriptionValue = req.body.description;
   const ingredientsValue = req.body.ingredients;
   const howToMakeValue = req.body.howToMake;
-  const imageResourceValue = req.body.imageResource;
+  const imageUrlValue = req.body.imageResource;
  
   console.log(`{recipeName : ${recipeNameValue}, 
   description : ${descriptionValue},
   ingredients : ${ingredientsValue},
   howToMake : ${howToMakeValue}},
-  imageURL : ${imageResourceValue}`);
+  imageURL : ${imageUrlValue}`);
 
   const recipe = new Recipe({
     recipeName: recipeNameValue,
