@@ -45,8 +45,9 @@ app.post("/postrecipe", (req,res)=>{
   console.log(`{recipeName : ${recipeNameValue}, 
   description : ${descriptionValue},
   ingredients : ${ingredientsValue},
-  howToMake : ${howToMakeValue}},
-  imageURL : ${imageUrlValue}`);
+  howToMake : ${howToMakeValue},
+  imageURL : ${imageUrlValue}
+}`);
 
   const recipe = new Recipe({
     recipeName: recipeNameValue,
@@ -56,7 +57,7 @@ app.post("/postrecipe", (req,res)=>{
     imageUrl: imageUrlValue
   });
 
-  res.status(statusCode.created).send(JSON.stringify({"status" : "success"}));
+  res.status(statusCode.Created).send(JSON.stringify({"status" : "success"}));
 
   // recipe
   //   .save()

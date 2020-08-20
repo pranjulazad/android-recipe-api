@@ -1,5 +1,5 @@
 module.exports = {
-    "success"  : 200,
+    "Success"  : 200,
     "Created" : 201,
     "Accepted" : 202,
     "NonAuthoritativeInformation" : 203,
