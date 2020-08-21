@@ -2,6 +2,7 @@ var express = require("express");
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const statusCode = require('./util/StatusCodes');
+const _ = require('underscore');
 
 //let stringify = require('json-stringify-safe');
 
@@ -10,13 +11,13 @@ var Recipe = require("./models/recipe");
 
 var MONGODB_URI = "mongodb+srv://root:F29vjDQtpf2QjwjA@cluster0-ei6oq.mongodb.net/androidapp-nodejs-recipes?retryWrites=true&w=majority";
 
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true , useUnifiedTopology: true})
-.then(result => {
-    var server = app.listen(3000, ()=>{
-        var host = "localhost";
-        var port = server.address().port
-        
-        console.log(`Example app listening at http://${host}:${port}`);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(result => {
+    var server = app.listen(3000, () => {
+      var host = "localhost";
+      var port = server.address().port
+
+      console.log(`Example app listening at http://${host}:${port}`);
     });
   })
   .catch(err => {
@@ -32,7 +33,7 @@ app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.post("/postrecipe", (req,res)=>{
+app.post("/postrecipe", (req, res) => {
 
   //console.log("req : "+stringify(req))  
 
@@ -41,45 +42,53 @@ app.post("/postrecipe", (req,res)=>{
   const ingredientsValue = req.body.ingredients;
   const howToMakeValue = req.body.howToMake;
   const imageUrlValue = req.body.imageResource;
- 
+
   console.log(`{recipeName : ${recipeNameValue}, 
   description : ${descriptionValue},
   ingredients : ${ingredientsValue},
   howToMake : ${howToMakeValue},
-  imageURL : ${imageUrlValue}
+  imageResource : ${imageUrlValue}
 }`);
 
-  const recipe = new Recipe({
-    recipeName: recipeNameValue,
-    description: descriptionValue,
-    ingredients: ingredientsValue,
-    howToMake : howToMakeValue,
-    imageUrl: imageUrlValue
-  });
+  if (!_.isEmpty(recipeNameValue) && !_.isEmpty(descriptionValue) &&
+    !_.isEmpty(ingredientsValue) && !_.isEmpty(howToMakeValue) && !_.isEmpty(imageUrlValue)) {
 
-  res.status(statusCode.Created).send(JSON.stringify({"status" : "success"}));
+      const recipe = new Recipe({
+      recipeName: recipeNameValue,
+      description: descriptionValue,
+      ingredients: ingredientsValue,
+      howToMake: howToMakeValue,
+      imageUrl: imageUrlValue
+    });
 
-  // recipe
-  //   .save()
-  //   .then(result => {
-  //     console.log('Recipe Posted');
-  //     res.status(statusCode.created).send(statusCode.success);
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //     res.status().send(statusCode.BadRequest); // send("Recipe Creation Process Failed")
-  //   });   
+    //res.status(statusCode.Created).send(JSON.stringify([{"status" : "success"}]));
+
+    recipe
+      .save()
+      .then(result => {
+        console.log('Recipe Posted');
+        res.status(statusCode.Created).send(JSON.stringify([{ "status": "success" }]));
+      })
+      .catch(err => {
+        console.log("ERROR in post a Recipe path '/postrecipe' : " + err);
+        res.status(statusCode.BadRequest).send(JSON.stringify([{ "status": "failed" }])); // send("Recipe Creation Process Failed")
+      });
+
+  } else {
+    res.status(statusCode.BadRequest).send(JSON.stringify([{ "status": "failed" }]));
+  }
 
 });
 
-app.get("/allrecipes", (req,res)=>{
-    Recipe.find()
+app.get("/allrecipes", (req, res) => {
+  Recipe.find()
     .then((recipe) => {
-        res.status(200).send(JSON.stringify(recipe));
-    }).catch(err=>{
-        console.log("ERROR in Find All Recipes path '/allrecipes' : "+err);
+      res.status(200).send(JSON.stringify(recipe));
+    }).catch(err => {
+      console.log("ERROR in Find All Recipes path '/allrecipes' : " + err);
+      res.status(statusCode.BadRequest).send(JSON.stringify([{ "status": "failed" }]));
     })
-     
+
 });
 
 
