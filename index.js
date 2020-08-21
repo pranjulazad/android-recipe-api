@@ -41,7 +41,7 @@ app.post("/postrecipe", (req, res) => {
   const descriptionValue = req.body.description;
   const ingredientsValue = req.body.ingredients;
   const howToMakeValue = req.body.howToMake;
-  const imageUrlValue = req.body.imageResource;
+  const imageUrlValue = req.body.imageResource == null ? 2131230824 : req.body.imageResource;
 
   console.log(`{recipeName : ${recipeNameValue}, 
   description : ${descriptionValue},
@@ -51,7 +51,7 @@ app.post("/postrecipe", (req, res) => {
 }`);
 
   if (!_.isEmpty(recipeNameValue) && !_.isEmpty(descriptionValue) &&
-    !_.isEmpty(ingredientsValue) && !_.isEmpty(howToMakeValue) && !_.isEmpty(imageUrlValue)) {
+    !_.isEmpty(ingredientsValue) && !_.isEmpty(howToMakeValue) && imageUrlValue != null ) {
 
       const recipe = new Recipe({
       recipeName: recipeNameValue,
