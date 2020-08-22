@@ -29,7 +29,7 @@ app.post("/postrecipe", (req, res) => {
   const descriptionValue = req.body.description;
   const ingredientsValue = req.body.ingredients;
   const howToMakeValue = req.body.howToMake;
-  const imageUrlValue = req.body.imageResource == null ? 2131230824 : req.body.imageResource;
+  const imageUrlValue = req.body.imageUrl;
 
   console.log(`{recipeName : ${recipeNameValue}, 
   description : ${descriptionValue},
