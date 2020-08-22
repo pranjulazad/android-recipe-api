@@ -67,15 +67,15 @@ app.post("/postrecipe", (req, res) => {
       .save()
       .then(result => {
         console.log('Recipe Posted');
-        res.status(statusCode.Created).send(JSON.stringify([{ "status": "success" }]));
+        res.status(statusCode.Created).send(JSON.stringify({ "status": "success" }));
       })
       .catch(err => {
         console.log("ERROR in post a Recipe path '/postrecipe' : " + err);
-        res.status(statusCode.BadRequest).send(JSON.stringify([{ "status": "failed" }])); // send("Recipe Creation Process Failed")
+        res.status(statusCode.BadRequest).send(JSON.stringify({ "status": "failed" })); // send("Recipe Creation Process Failed")
       });
 
   } else {
-    res.status(statusCode.BadRequest).send(JSON.stringify([{ "status": "failed" }]));
+    res.status(statusCode.BadRequest).send(JSON.stringify({ "status": "failed" }));
   }
 
 });
