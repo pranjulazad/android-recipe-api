@@ -1,4 +1,5 @@
-var express = require("express");
+const path = require('path');
+var express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const statusCode = require('./util/StatusCodes');
@@ -6,28 +7,15 @@ const _ = require('underscore');
 
 //let stringify = require('json-stringify-safe');
 
-//model imports
+//Import Recipe model
 var Recipe = require("./models/recipe");
 
 var MONGODB_URI = "mongodb+srv://root:F29vjDQtpf2QjwjA@cluster0-ei6oq.mongodb.net/androidapp-nodejs-recipes?retryWrites=true&w=majority";
 
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result => {
-    var server = app.listen(3000, () => {
-      var host = "localhost";
-      var port = server.address().port
-
-      console.log(`Example app listening at http://${host}:${port}`);
-    });
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
-
 var app = express();
 // support parsing of application/json type post data
 app.use(bodyParser.json());
+app.user(express.static('public')
 
 //support parsing of application/x-www-form-urlencoded post data
 // app.use(bodyParser.urlencoded({ extended: false }));
@@ -90,5 +78,20 @@ app.get("/allrecipes", (req, res) => {
     })
 
 });
+
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(result => {
+    var server = app.listen(3000, () => {
+      var host = "localhost";
+      var port = server.address().port
+
+      console.log(`Example app listening at http://${host}:${port}`);
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
 
 
