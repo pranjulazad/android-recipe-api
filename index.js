@@ -15,7 +15,7 @@ var MONGODB_URI = "mongodb+srv://root:F29vjDQtpf2QjwjA@cluster0-ei6oq.mongodb.ne
 var app = express();
 // support parsing of application/json type post data
 app.use(bodyParser.json());
-app.user(express.static('public')
+app.use(express.static('public'))
 
 //support parsing of application/x-www-form-urlencoded post data
 // app.use(bodyParser.urlencoded({ extended: false }));
