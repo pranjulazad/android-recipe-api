@@ -19,7 +19,7 @@ const recipeSchema = new Schema({
       type : String,
       required : true
   },
-  imageUrl: {
+  imagesUrl: {
     type: Array,
     required: true
   },

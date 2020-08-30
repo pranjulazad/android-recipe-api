@@ -29,24 +29,24 @@ app.post("/postrecipe", (req, res) => {
   const descriptionValue = req.body.description;
   const ingredientsValue = req.body.ingredients;
   const howToMakeValue = req.body.howToMake;
-  const imageUrlValue = req.body.imageUrl;
+  const imagesUrlValue = req.body.imagesUrl;
 
   console.log(`{recipeName : ${recipeNameValue}, 
   description : ${descriptionValue},
   ingredients : ${ingredientsValue},
   howToMake : ${howToMakeValue},
-  imageResource : ${imageUrlValue}
+  imageResource : ${imagesUrlValue}
 }`);
 
   if (!_.isEmpty(recipeNameValue) && !_.isEmpty(descriptionValue) &&
-    !_.isEmpty(ingredientsValue) && !_.isEmpty(howToMakeValue) && imageUrlValue != null ) {
+    !_.isEmpty(ingredientsValue) && !_.isEmpty(howToMakeValue) && imagesUrlValue != null ) {
 
       const recipe = new Recipe({
       recipeName: recipeNameValue,
       description: descriptionValue,
       ingredients: ingredientsValue,
       howToMake: howToMakeValue,
-      imageUrl: imageUrlValue
+      imagesUrl: imagesUrlValue
     });
 
     //res.status(statusCode.Created).send(JSON.stringify([{"status" : "success"}]));
