@@ -1,1 +1,5 @@
+#Libraries which can be downloaded using npm install if mentioned in package.json file
 node_modules
+
+#Secured Files
+secured/Mongo*

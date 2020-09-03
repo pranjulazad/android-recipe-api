@@ -3,6 +3,8 @@ var express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const statusCode = require('./util/StatusCodes');
+const PropReader = require('properties-reader');
+const reader = PropReader(path.join(__dirname, "/secured/MongoDBConfig.properties"))
 const _ = require('underscore');
 
 //let stringify = require('json-stringify-safe');
@@ -10,9 +12,12 @@ const _ = require('underscore');
 //Import Recipe model
 var Recipe = require("./models/recipe");
 
-var MONGODB_URI = "mongodb+srv://root:F29vjDQtpf2QjwjA@cluster0-ei6oq.mongodb.net/androidapp-nodejs-recipes?retryWrites=true&w=majority";
+//MongoDBURL
+var MONGODB_URI = reader.get("mongodb.url");
 
+//Initializing express app
 var app = express();
+
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 app.use(express.static('public'))
