@@ -3,4 +3,5 @@ node_modules
 
 #Secured Files
 secured/Mongo*
-secured/publicPrivate*
+secured/pri*
+secured/pub*

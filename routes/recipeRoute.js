@@ -1,4 +1,4 @@
-var recipeRoute = require('express').Router;
+var recipeRoute = require('express').Router();
 const statusCode = require('../util/StatusCodes');
 var Recipe = require("../models/recipe");
 

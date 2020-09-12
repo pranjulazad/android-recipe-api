@@ -11,7 +11,7 @@ const _ = require('underscore');
 //routes
 var recipeRoute = require('./routes/recipeRoute')
 var userRoute = require('./routes/userRoute')
-var authVerify = require('./routes/authRoute').verify
+var { verifyToken } = require('./routes/authRoute')
 
 //Initializing express app
 var app = express();
@@ -20,8 +20,8 @@ var app = express();
 app.use(bodyParser.json());
 app.use(express.static('public'))
 
-app.user('/user', [authVerify, recipeRoute])
-app.user('/recipe', userRoute)
+app.use('/recipe', [verifyToken, recipeRoute])
+app.use('/user', userRoute)
 
 //support parsing of application/x-www-form-urlencoded post data
 // app.use(bodyParser.urlencoded({ extended: false }));
